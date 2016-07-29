@@ -10,6 +10,7 @@ using System.Globalization;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using DatabaseExplorer.ToolWindows;
+using DatabaseExplorer.ToolbarCommandHandlers;
 
 namespace DatabaseExplorer.ToolbarCommands
 {
@@ -113,22 +114,23 @@ namespace DatabaseExplorer.ToolbarCommands
 
             // Create the handles for the toolbar command. 
             var mcs = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+
             var toolbarbtnCmdID = new CommandID(new Guid(DbExplorerCommand.guidDbExplorerPackageCmdSet),
-                DbExplorerCommand.cmdidWindowsMediaOpen);
+                DbExplorerCommand.cmdidWindowsMediaOpen);            
             var menuItem = new MenuCommand(new EventHandler(
-                ButtonHandler), toolbarbtnCmdID);
+                DbConnect), toolbarbtnCmdID);
             mcs.AddCommand(menuItem);
 
 
-            var mcs1 = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            var toolbarbtnCmdID1 = new CommandID(new Guid(DbConnectCommand.guidDbExplorerPackageCmdSet),
-                DbConnectCommand.cmdidDbConnect);
+            //var mcs1 = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var toolbarbtnCmdID1 = new CommandID(new Guid(ToolbarCommandConstants.guidDbExplorerPackageCmdSet),
+                ToolbarCommandConstants.cmdidDbConnect);
             var menuItem1 = new MenuCommand(new EventHandler(
-                ButtonHandler), toolbarbtnCmdID1);
-            mcs1.AddCommand(menuItem1);
+                Refresh), toolbarbtnCmdID1);
+            mcs.AddCommand(menuItem1);
         }
 
-        private void ButtonHandler(object sender, EventArgs arguments)
+        private void DbConnect(object sender, EventArgs arguments)
         {
             //OpenFileDialog openFileDialog = new OpenFileDialog();
             //DialogResult result = openFileDialog.ShowDialog();
@@ -137,6 +139,11 @@ namespace DatabaseExplorer.ToolbarCommands
             //    window.control.MediaPlayer.Source = new System.Uri(openFileDialog.FileName);
             //}
             
+            
+        }
+
+        private void Refresh(object sender, EventArgs args)
+        {
             
         }
     }
