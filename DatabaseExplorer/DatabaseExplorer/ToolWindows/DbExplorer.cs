@@ -10,7 +10,7 @@ namespace DatabaseExplorer.ToolWindows
     using System.Runtime.InteropServices;
     using Microsoft.VisualStudio.Shell;
     using System.ComponentModel.Design;
-    using DatabaseExplorer.ToolbarCommands;
+    using DatabaseExplorer.ToolWindows.Commands;
     using Microsoft.VisualStudio.Shell.Interop;
 
     /// <summary>
@@ -44,8 +44,7 @@ namespace DatabaseExplorer.ToolWindows
             control = new DbExplorerControl();
             base.Content = control;
 
-            this.ToolBar = new CommandID(new Guid(DbExplorerCommand.guidDbExplorerPackageCmdSet),
-    DbExplorerCommand.ToolbarID);
+            this.ToolBar = new CommandID(new Guid(DbExplorerCommand.guidDbExplorerPackageCmdSet), DbExplorerCommand.ToolbarID);
             this.ToolBarLocation = (int)VSTWT_LOCATION.VSTWT_TOP;
         }
     }

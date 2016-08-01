@@ -66,20 +66,10 @@
         </Strings>
       </Button>
     
-      <!--Toolbar button-->
-      <Button guid="guidDbExplorerPackageCmdSet" id="cmdidWindowsMediaOpen" priority="0x0101" type="Button">
-          <Parent guid="guidDbExplorerPackageCmdSet" id="ToolbarGroupID"/>
-          <Icon guid="guidImages" id="bmpPicSearch" />
-          <Strings>
-              <CommandName>cmdidWindowsMediaOpen</CommandName>
-              <ButtonText>Load File</ButtonText>
-          </Strings>
-      </Button>
-    
       <!--Toolbar button - DbConnect-->
     <Button guid="guidDbExplorerPackageCmdSet" id="cmdidDbConnect" priority="0x0102" type="Button">
       <Parent guid="guidDbExplorerPackageCmdSet" id="ToolbarGroupID"/>
-      <Icon guid="guidImages" id="bmpPic2" />
+      <Icon guid="guidImages" id="bmpPic1" />
       <Strings>
           <CommandName>cmdidDbConnect</CommandName>
           <ButtonText>Db Connection</ButtonText>
@@ -109,11 +99,7 @@
       <!--Toolbar's ID Symbol-->
       <IDSymbol name="ToolbarID" value="0x1000" />
       <IDSymbol name="ToolbarGroupID" value="0x1001" ></IDSymbol>
-                
-        <!--Toolbar Command's ID Symbol -->
-      <IDSymbol name="cmdidWindowsMedia" value="0x0100" />
-      <IDSymbol name="cmdidWindowsMediaOpen" value="0x132" />
-
+        
       <!--Toolbar Command's ID Symbol for DbConnect-->
       <IDSymbol name="cmdidDbConnect" value="0x0200"/>
     </GuidSymbol>

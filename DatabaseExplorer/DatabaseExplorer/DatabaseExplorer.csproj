@@ -52,8 +52,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToolbarCommands\DbExplorerCommand.cs" />
-    <Compile Include="ToolbarCommands\ToolbarCommandConstants.cs" />
+    <Compile Include="ToolWindows\Commands\DbExplorerCommand.cs" />
     <Compile Include="ToolWindows\DbExplorer.cs" />
     <Compile Include="ToolWindows\DbExplorerControl.xaml.cs">
       <DependentUpon>DbExplorerControl.xaml</DependentUpon>

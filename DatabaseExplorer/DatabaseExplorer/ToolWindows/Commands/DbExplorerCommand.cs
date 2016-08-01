@@ -9,10 +9,8 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using DatabaseExplorer.ToolWindows;
-using DatabaseExplorer.ToolbarCommandHandlers;
 
-namespace DatabaseExplorer.ToolbarCommands
+namespace DatabaseExplorer.ToolWindows.Commands
 {
     /// <summary>
     /// Command handler
@@ -37,8 +35,9 @@ namespace DatabaseExplorer.ToolbarCommands
         private readonly Package package;
 
         public const string guidDbExplorerPackageCmdSet = "7dbe848b-4889-4627-a5ce-c9e1ccc10f93";  // get the GUID from the .vsct file
-        public const uint cmdidWindowsMedia = 0x100;
-        public const int cmdidWindowsMediaOpen = 0x132;
+        //public const uint cmdidWindowsMedia = 0x100;
+        //public const int cmdidWindowsMediaOpen = 0x132;
+        public const int cmdidDbConnect = 0x200;
         public const int ToolbarID = 0x1000;
 
         /// <summary>
@@ -115,36 +114,19 @@ namespace DatabaseExplorer.ToolbarCommands
             // Create the handles for the toolbar command. 
             var mcs = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
 
-            var toolbarbtnCmdID = new CommandID(new Guid(DbExplorerCommand.guidDbExplorerPackageCmdSet),
-                DbExplorerCommand.cmdidWindowsMediaOpen);            
-            var menuItem = new MenuCommand(new EventHandler(
-                DbConnect), toolbarbtnCmdID);
-            mcs.AddCommand(menuItem);
-
-
-            //var mcs1 = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            var toolbarbtnCmdID1 = new CommandID(new Guid(ToolbarCommandConstants.guidDbExplorerPackageCmdSet),
-                ToolbarCommandConstants.cmdidDbConnect);
-            var menuItem1 = new MenuCommand(new EventHandler(
-                Refresh), toolbarbtnCmdID1);
-            mcs.AddCommand(menuItem1);
+            var dbConnectCommandId = new CommandID(new Guid(guidDbExplorerPackageCmdSet), cmdidDbConnect);
+            var dbConnectMenuCommand = new MenuCommand(new EventHandler(
+                DbConnectCommandHandler), dbConnectCommandId);
+            mcs.AddCommand(dbConnectMenuCommand);
         }
 
-        private void DbConnect(object sender, EventArgs arguments)
+        #region Command Handlers
+
+        private void DbConnectCommandHandler(object sender, EventArgs arguments)
         {
-            //OpenFileDialog openFileDialog = new OpenFileDialog();
-            //DialogResult result = openFileDialog.ShowDialog();
-            //if (result == DialogResult.OK)
-            //{
-            //    window.control.MediaPlayer.Source = new System.Uri(openFileDialog.FileName);
-            //}
-            
-            
+               
         }
 
-        private void Refresh(object sender, EventArgs args)
-        {
-            
-        }
+        #endregion
     }
 }
