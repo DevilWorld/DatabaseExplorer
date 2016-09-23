@@ -9,6 +9,9 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.Data.ConnectionUI;
+using System.Windows.Forms;
+using System.IO;
 
 namespace DatabaseExplorer.ToolWindows.Commands
 {
@@ -60,9 +63,9 @@ namespace DatabaseExplorer.ToolWindows.Commands
                 var menuCommandID = new CommandID(CommandSet, CommandId);
                 var menuItem = new MenuCommand(this.ShowToolWindow, menuCommandID);
                 commandService.AddCommand(menuItem);
-            }
+            }            
         }
-
+        
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
@@ -124,7 +127,14 @@ namespace DatabaseExplorer.ToolWindows.Commands
 
         private void DbConnectCommandHandler(object sender, EventArgs arguments)
         {
-               
+            DataConnectionDialog dcd = new DataConnectionDialog();
+            
+            DataSource.AddStandardDataSources(dcd);
+
+            if (DataConnectionDialog.Show(dcd) == DialogResult.OK)
+            {
+                
+            }
         }
 
         #endregion
