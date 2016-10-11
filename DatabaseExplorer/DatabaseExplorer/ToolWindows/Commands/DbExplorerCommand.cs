@@ -12,6 +12,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Data.ConnectionUI;
 using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms.Integration;
 
 namespace DatabaseExplorer.ToolWindows.Commands
 {
@@ -127,13 +128,23 @@ namespace DatabaseExplorer.ToolWindows.Commands
 
         private void DbConnectCommandHandler(object sender, EventArgs arguments)
         {
+            //SQL DataSource
+            //var sqlDataSource = new DataSource("MicrosoftSqlServer", "Microsoft SQL SERVER");
+            //sqlDataSource.Providers.Add(DataProvider.SqlDataProvider);
+
             DataConnectionDialog dcd = new DataConnectionDialog();
+            dcd.DataSources.Add(DataSource.SqlDataSource);
+            dcd.DataSources.Add(DataSource.SqlFileDataSource);
+
+            dcd.SelectedDataSource = DataSource.SqlDataSource;
+            dcd.SelectedDataProvider = DataProvider.SqlDataProvider;
             
-            DataSource.AddStandardDataSources(dcd);
+
+            //DataSource.AddStandardDataSources(dcd);
 
             if (DataConnectionDialog.Show(dcd) == DialogResult.OK)
             {
-                
+                var connectionString = dcd.ConnectionString;
             }
         }
 

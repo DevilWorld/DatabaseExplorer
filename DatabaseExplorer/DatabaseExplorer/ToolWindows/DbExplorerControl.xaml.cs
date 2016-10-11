@@ -40,6 +40,6 @@ namespace DatabaseExplorer.ToolWindows
             MessageBox.Show(
                 string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
                 "DbExplorer");
-        }
+        }        
     }
 }

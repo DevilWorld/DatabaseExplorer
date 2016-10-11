@@ -67,9 +67,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Database1.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="index.html" />
     <Content Include="stylesheet.css" />
     <VSCTCompile Include="ToolWindows\DbExplorerPackage.vsct">
@@ -200,6 +197,7 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ToolWindows\VSPackage.resx">
