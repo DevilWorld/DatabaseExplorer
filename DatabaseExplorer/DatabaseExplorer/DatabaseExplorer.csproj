@@ -58,6 +58,10 @@
       <DependentUpon>DbExplorerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ToolWindows\DbExplorerPackage.cs" />
+    <Compile Include="Xaml\TreeviewElementHost.cs" />
+    <Compile Include="Xaml\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
@@ -77,6 +81,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="ToolWindows\DbExplorerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Xaml\UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,7 +213,12 @@
       <ManifestResourceName>VSPackage</ManifestResourceName>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PocoGenerator.Domain\PocoGenerator.Domain.csproj">
+      <Project>{95417548-6c69-4da5-befd-3e323f393bc0}</Project>
+      <Name>PocoGenerator.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

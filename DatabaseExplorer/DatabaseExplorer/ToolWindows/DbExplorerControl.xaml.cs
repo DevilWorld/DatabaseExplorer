@@ -9,16 +9,19 @@ namespace DatabaseExplorer.ToolWindows
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
     using System.Windows.Controls;
-
+    using System.Collections.Generic;
+    using System.Windows.Media;
+    using System.ComponentModel;    
+    
     /// <summary>
     /// Interaction logic for DbExplorerControl.
     /// </summary>
     public partial class DbExplorerControl : UserControl
     {
-        //public System.Windows.Controls.MediaElement MediaPlayer
-        //{
-        //    get { return mediaElement1; }
-        //}
+        public TreeView TreeView
+        {
+            get { return tvDatabase; }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DbExplorerControl"/> class.

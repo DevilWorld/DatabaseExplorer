@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseExplorer", "DatabaseExplorer\DatabaseExplorer.csproj", "{D6B7E1B0-F236-4994-A405-AD5367A8328F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{95417548-6C69-4DA5-BEFD-3E323F393BC0} = {95417548-6C69-4DA5-BEFD-3E323F393BC0}
+		{92042DA6-4D20-44BF-880D-B947679377F4} = {92042DA6-4D20-44BF-880D-B947679377F4}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocoGenerator.Domain.Models", "PocoGenerator.Domain.Models\PocoGenerator.Domain.Models.csproj", "{92042DA6-4D20-44BF-880D-B947679377F4}"
 EndProject

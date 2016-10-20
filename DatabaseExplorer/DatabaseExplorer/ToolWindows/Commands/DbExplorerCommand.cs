@@ -11,8 +11,8 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Data.ConnectionUI;
 using System.Windows.Forms;
-using System.IO;
-using System.Windows.Forms.Integration;
+using PocoGenerator.Domain;
+using System.Collections.Generic;
 
 namespace DatabaseExplorer.ToolWindows.Commands
 {
@@ -144,9 +144,26 @@ namespace DatabaseExplorer.ToolWindows.Commands
 
             if (DataConnectionDialog.Show(dcd) == DialogResult.OK)
             {
-                var connectionString = dcd.ConnectionString;
+                Global.ConnectionString = dcd.ConnectionString;
+
+
+                List<string> lstItems = new List<string>();
+                lstItems.Add("Apple");
+                lstItems.Add("Orange");
+                lstItems.Add("Grapes");
+
+                foreach (var item in lstItems)
+                {
+                    window.control.tvDatabase.Items.Add(item);                    
+                }
             }
         }
+
+        #endregion
+
+        #region Helper Methods
+
+
 
         #endregion
     }
