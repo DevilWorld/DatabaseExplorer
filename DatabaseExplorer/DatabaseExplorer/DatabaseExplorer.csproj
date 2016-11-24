@@ -7,6 +7,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <UseCodebase>true</UseCodebase>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -25,7 +26,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DatabaseExplorer</RootNamespace>
     <AssemblyName>DatabaseExplorer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
@@ -41,6 +42,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
+    <CopyVsixExtensionLocation>C:\temp</CopyVsixExtensionLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,17 +54,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ILoadDatabaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\LoadDatabaseService.cs" />
+    <Compile Include="Startup\AutofacConfiguration.cs" />
     <Compile Include="ToolWindows\Commands\DbExplorerCommand.cs" />
     <Compile Include="ToolWindows\DbExplorer.cs" />
     <Compile Include="ToolWindows\DbExplorerControl.xaml.cs">
       <DependentUpon>DbExplorerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ToolWindows\DbExplorerPackage.cs" />
-    <Compile Include="Xaml\TreeviewElementHost.cs" />
-    <Compile Include="Xaml\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ToolWindows\ViewModel\DbObjectViewModel.cs" />
+    <Compile Include="ToolWindows\VirtualToggleButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
@@ -84,12 +88,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Xaml\UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.1.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.1.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+      <ForceIncludeInVSIX>true</ForceIncludeInVSIX>
+    </Reference>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -214,11 +219,20 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PocoGenerator.Domain.Models\PocoGenerator.Domain.Models.csproj">
+      <Project>{92042da6-4d20-44bf-880d-b947679377f4}</Project>
+      <Name>PocoGenerator.Domain.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PocoGenerator.Domain\PocoGenerator.Domain.csproj">
       <Project>{95417548-6c69-4da5-befd-3e323f393bc0}</Project>
       <Name>PocoGenerator.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PocoGenerator.Infrastructure\PocoGenerator.Infrastructure.csproj">
+      <Project>{966ed3a1-6d02-4451-b8e5-4ae1ac356753}</Project>
+      <Name>PocoGenerator.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

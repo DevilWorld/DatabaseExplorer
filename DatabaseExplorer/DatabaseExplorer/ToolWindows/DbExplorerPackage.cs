@@ -17,6 +17,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 using DatabaseExplorer.ToolWindows.Commands;
 
+
 namespace DatabaseExplorer.ToolWindows
 {
     /// <summary>
@@ -35,13 +36,14 @@ namespace DatabaseExplorer.ToolWindows
     /// <para>
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
-    /// </remarks>
+    /// </remarks>    
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideToolWindow(typeof(DbExplorer), Style = Microsoft.VisualStudio.Shell.VsDockStyle.Tabbed, Window = "3ae79031-e1bc-11d0-8f78-00a0c9110057")]
     [Guid(DbExplorerPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
+    //[ProvideBindingPath(SubPath = @"C:\Users\Dinesh\Documents\Visual Studio 2015\Projects\DatabaseExplorer\DatabaseExplorer\DatabaseExplorer\Extensions\")]
     public sealed class DbExplorerPackage : Package
     {
         /// <summary>
@@ -70,6 +72,8 @@ namespace DatabaseExplorer.ToolWindows
         {
             DbExplorerCommand.Initialize(this);
             base.Initialize();
+
+            
         }
 
         #endregion

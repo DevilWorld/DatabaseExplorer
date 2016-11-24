@@ -12,7 +12,15 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Data.ConnectionUI;
 using System.Windows.Forms;
 using PocoGenerator.Domain;
+using DatabaseExplorer.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
+using Autofac;
+using DatabaseExplorer.StartUp;
+using PocoGenerator.Domain.Models.Dto;
+using System.Windows.Controls;
+using System.Windows.Data;
+using DatabaseExplorer.ToolWindows.ViewModel;
 
 namespace DatabaseExplorer.ToolWindows.Commands
 {
@@ -64,9 +72,9 @@ namespace DatabaseExplorer.ToolWindows.Commands
                 var menuCommandID = new CommandID(CommandSet, CommandId);
                 var menuItem = new MenuCommand(this.ShowToolWindow, menuCommandID);
                 commandService.AddCommand(menuItem);
-            }            
+            }
         }
-        
+
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
@@ -94,6 +102,8 @@ namespace DatabaseExplorer.ToolWindows.Commands
         public static void Initialize(Package package)
         {
             Instance = new DbExplorerCommand(package);
+
+
         }
 
         /// <summary>
@@ -106,7 +116,7 @@ namespace DatabaseExplorer.ToolWindows.Commands
             // Get the instance number 0 of this tool window. This window is single instance so this instance
             // is actually the only one.
             // The last flag is set to true so that if the tool window does not exists it will be created.
-            window =(DbExplorer) this.package.FindToolWindow(typeof(DbExplorer), 0, true);
+            window = (DbExplorer)this.package.FindToolWindow(typeof(DbExplorer), 0, true);
             if ((null == window) || (null == window.Frame))
             {
                 throw new NotSupportedException("Cannot create tool window");
@@ -128,6 +138,10 @@ namespace DatabaseExplorer.ToolWindows.Commands
 
         private void DbConnectCommandHandler(object sender, EventArgs arguments)
         {
+            //AppDomain.CurrentDomain.Load("Autofac");
+
+            AutofacConfiguration.Configure();
+
             //SQL DataSource
             //var sqlDataSource = new DataSource("MicrosoftSqlServer", "Microsoft SQL SERVER");
             //sqlDataSource.Providers.Add(DataProvider.SqlDataProvider);
@@ -138,7 +152,7 @@ namespace DatabaseExplorer.ToolWindows.Commands
 
             dcd.SelectedDataSource = DataSource.SqlDataSource;
             dcd.SelectedDataProvider = DataProvider.SqlDataProvider;
-            
+
 
             //DataSource.AddStandardDataSources(dcd);
 
@@ -146,15 +160,13 @@ namespace DatabaseExplorer.ToolWindows.Commands
             {
                 Global.ConnectionString = dcd.ConnectionString;
 
-
-                List<string> lstItems = new List<string>();
-                lstItems.Add("Apple");
-                lstItems.Add("Orange");
-                lstItems.Add("Grapes");
-
-                foreach (var item in lstItems)
+                using (var scope = Global.Container.BeginLifetimeScope())
                 {
-                    window.control.tvDatabase.Items.Add(item);                    
+                    var loadDatabaseService = scope.Resolve<ILoadDatabaseService>();
+
+                    var tables = loadDatabaseService.LoadTables();
+
+                    PopulateTreeWithTables(tables);
                 }
             }
         }
@@ -163,7 +175,41 @@ namespace DatabaseExplorer.ToolWindows.Commands
 
         #region Helper Methods
 
+        private void PopulateTreeWithTables(IEnumerable<TablesWithColumnsDto> tables)
+        {
+            //foreach (var table in tables)
+            //{
+            //    var parent = new TreeViewItem();
 
+            //    parent.Name = table.Name;
+            //    parent.Header = table.Name;
+
+            //    //if (table.Name.Contains("Student"))
+            //    parent.ContextMenu = window.control.BindContextMenusForTreeView;
+
+            //    foreach (var column in table.Columns)
+            //    {
+            //        var child = new TreeViewItem();
+            //        child.Name = column.name;
+            //        child.Header = column.name;
+
+            //        parent.Items.Add(child);
+            //    }
+
+            //    window.control.TreeView.Items.Add(parent);
+            //}
+
+            ObjectDataProvider _dataProvider = new ObjectDataProvider();
+            using (_dataProvider.DeferRefresh())
+            {
+                _dataProvider.ObjectType = typeof(DbObjectViewModel);
+                _dataProvider.MethodName = "CreateDbTreeStructure";
+                _dataProvider.MethodParameters.Add(tables);
+            }
+            window.control.TreeView.DataContext = _dataProvider;
+
+            //    window.control.TreeView.ItemsSource = tables;
+        }
 
         #endregion
     }
