@@ -177,28 +177,6 @@ namespace DatabaseExplorer.ToolWindows.Commands
 
         private void PopulateTreeWithTables(IEnumerable<TablesWithColumnsDto> tables)
         {
-            //foreach (var table in tables)
-            //{
-            //    var parent = new TreeViewItem();
-
-            //    parent.Name = table.Name;
-            //    parent.Header = table.Name;
-
-            //    //if (table.Name.Contains("Student"))
-            //    parent.ContextMenu = window.control.BindContextMenusForTreeView;
-
-            //    foreach (var column in table.Columns)
-            //    {
-            //        var child = new TreeViewItem();
-            //        child.Name = column.name;
-            //        child.Header = column.name;
-
-            //        parent.Items.Add(child);
-            //    }
-
-            //    window.control.TreeView.Items.Add(parent);
-            //}
-
             ObjectDataProvider _dataProvider = new ObjectDataProvider();
             using (_dataProvider.DeferRefresh())
             {
@@ -207,8 +185,6 @@ namespace DatabaseExplorer.ToolWindows.Commands
                 _dataProvider.MethodParameters.Add(tables);
             }
             window.control.TreeView.DataContext = _dataProvider;
-
-            //    window.control.TreeView.ItemsSource = tables;
         }
 
         #endregion

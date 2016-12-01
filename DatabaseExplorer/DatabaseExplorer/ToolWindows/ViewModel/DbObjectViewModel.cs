@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using DatabaseExplorer.Enums;
 
 namespace DatabaseExplorer.ToolWindows.ViewModel
 {
@@ -53,13 +54,22 @@ namespace DatabaseExplorer.ToolWindows.ViewModel
 
             var root = new DbObjectViewModel("School");
 
-            root.Children = tables.Select(x => 
-                                            new DbObjectViewModel(x.Name)
-                                            {
-                                                Children = x.Columns.Select(col => 
-                                                                                new DbObjectViewModel(col.name)).ToList()
-                                            }
-                                        ).ToList();
+            root.Children = tables.Select(x =>
+            {
+                var node = new DbObjectViewModel(x.Name)
+                {
+                    Children = x.Columns.Select(col =>
+                    {
+                        var child = new DbObjectViewModel(col.name);
+                        child.NodeType = NodeType.Column;
+                        return child;
+                    }).ToList() 
+                };
+
+                node.NodeType = NodeType.Table;
+
+                return node;
+            }).ToList();
 
             root.Initialize();
             return new List<DbObjectViewModel> { root };
@@ -141,6 +151,8 @@ namespace DatabaseExplorer.ToolWindows.ViewModel
         }
 
         #endregion // IsChecked
+
+        internal NodeType NodeType { get; private set; }
 
         #endregion // Properties
 

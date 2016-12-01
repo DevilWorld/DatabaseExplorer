@@ -33,6 +33,10 @@
 
             <HierarchicalDataTemplate x:Key="CheckBoxItemTemplate" ItemsSource="{Binding Children, Mode=OneTime}">
                 <StackPanel Orientation="Horizontal">
+                    <Image Name="img"  
+                           Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}},
+                           Path=Header,
+                           Converter={x:Static dw:HeaderToImageConverter.Instance}}"/>
                     <!-- These elements are bound to a FooViewModel object. -->
                     <CheckBox Focusable="False" IsChecked="{Binding IsChecked}" VerticalAlignment="Center" >
                         <CheckBox.Style>
@@ -44,9 +48,10 @@
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </CheckBox.Style>
+                        </CheckBox.Style>                        
                     </CheckBox>
-                    <ContentPresenter Content="{Binding Name, Mode=OneTime}" Margin="2,0"/>
+                    
+                    <ContentPresenter Content="{Binding Name, Mode=OneTime}" Margin="2,0"/>                    
                 </StackPanel>
             </HierarchicalDataTemplate>
         </ResourceDictionary>
@@ -60,10 +65,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>                
             </Grid.ColumnDefinitions>
-
+            
             <TreeView x:Name="tvDatabase" HorizontalAlignment="Left" VerticalAlignment="Top" ContextMenuOpening="tvDatabase_ContextMenuOpening"
                   BorderThickness="0" ItemsSource="{Binding Mode=OneTime}" ItemTemplate="{StaticResource  CheckBoxItemTemplate}"
-                  ItemContainerStyle="{StaticResource TreeViewItemStyle}" Grid.Row="0" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  ItemContainerStyle="{StaticResource TreeViewItemStyle}" Grid.Row="0" Grid.Column="0" 
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             </TreeView>
         </Grid>
     </ScrollViewer>
